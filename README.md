@@ -1,5 +1,5 @@
-# STM32F103C8_NRF24L01
-STM32F103C8 - Blue Pill and two NRF24L01 - RX and TX for check thats works
+# hc_sr04_test1
+STM32F103C8 - Blue Pill and HC-SR04
 
 <img src='STM32F103C8T6_HC-SR04.png' />
 
