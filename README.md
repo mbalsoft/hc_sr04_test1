@@ -8,3 +8,5 @@ This project was implemented using project from http://ep.com.pl
 - Ultradźwiękowy czujnik odległości HC-SR04
 - author: Grzegorz Mazur
 
+The pinout view from STM32CubeMX:
+<img src='STM32F103C8T6_pinout.png' />

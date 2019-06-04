@@ -204,24 +204,21 @@ void EXTI4_IRQHandler(void)
 
 	int8_t i;
 
-	for( i = 0; i < 50; i++ ) {
-		send_buf[ i ] = ' ';
-	}
 	uint32_t tim2_cnt = htim2.Instance->CNT; //__HAL_TIM_GetCounter( &htim2 );  stm32f4xx_hal_tim.h
-	sprintf( send_buf, '%d', tim2_cnt );
-	//i = 1;
-	//while( (send_buf[ i ] != 0) && (i < 6) ) i++;
-	//for( ; i < 6; i++ ) send_buf[ i ] = ' ';
+	sprintf( send_buf, "%u", tim2_cnt );
+	i = 1;
+	while( (send_buf[ i ] != 0) && (i < 99) ) i++;
+	send_buf[ i++ ] = ' ';
 
 	if( HAL_GPIO_ReadPin( GPIOA, GPIO_PIN_4 )) {
-		send_buf[ 6 ] = 'H';
+		send_buf[ i++ ] = 'H';
 	}
 	else {
-		send_buf[ 6 ] = 'L';
+		send_buf[ i++ ] = 'L';
 	}
 
-	send_buf[ 7 ]     = 13;
-	send_buf[ 8 ]     = 10;
+	send_buf[ i++ ]     = 13;
+	send_buf[ i++ ]     = 10;
 	CDC_Transmit_FS( send_buf, 9 );
 
   /* USER CODE END EXTI4_IRQn 0 */

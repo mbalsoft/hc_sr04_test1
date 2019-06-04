@@ -119,7 +119,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
 
-  tim2_gpio_init();
+  //tim2_gpio_init();
 
   MX_SPI1_Init();
   MX_USB_DEVICE_Init();
@@ -295,7 +295,7 @@ static void MX_TIM2_Init(void)
   }
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 1000;
+  sConfigOC.Pulse = 3;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
