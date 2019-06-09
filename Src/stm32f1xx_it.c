@@ -37,7 +37,9 @@
 
 /* USER CODE BEGIN 0 */
 
-extern uint8_t send_buf[ 100 ];
+uint8_t send_buf[ 100 ];
+
+uint16_t ping, echo;
 
 /* USER CODE END 0 */
 
@@ -205,21 +207,38 @@ void EXTI4_IRQHandler(void)
 	int8_t i;
 
 	uint32_t tim2_cnt = htim2.Instance->CNT; //__HAL_TIM_GetCounter( &htim2 );  stm32f4xx_hal_tim.h
-	sprintf( send_buf, "%u", tim2_cnt );
-	i = 1;
-	while( (send_buf[ i ] != 0) && (i < 99) ) i++;
-	send_buf[ i++ ] = ' ';
+//	sprintf( send_buf, "%u", tim2_cnt );
+//	i = 1;
+//	while( (send_buf[ i ] != 0) && (i < 99) ) i++;
+//	send_buf[ i++ ] = ' ';
 
 	if( HAL_GPIO_ReadPin( GPIOA, GPIO_PIN_4 )) {
-		send_buf[ i++ ] = 'H';
+//		send_buf[ i++ ] = 'H';
+		ping = tim2_cnt;
 	}
 	else {
-		send_buf[ i++ ] = 'L';
+//		send_buf[ i++ ] = 'L';
+		HAL_GPIO_WritePin( GPIOC, GPIO_PIN_13, GPIO_PIN_SET );
+		echo = tim2_cnt;
+		if( (ping > 2) && (ping < 126) && (echo > ping) ) {
+			uint32_t dist_mm = echo >= 62496 ? 9999 : (echo - ping) * 8 * 10 / 58;
+			if( dist_mm < 2000 ) {
+				HAL_GPIO_WritePin( GPIOC, GPIO_PIN_13, GPIO_PIN_RESET );
+				sprintf( send_buf, "%u", dist_mm );
+				i = 1;
+				while( (send_buf[ i ] != 0) && (i < 99) ) i++;
+				send_buf[ i++ ]     = 'm';
+				send_buf[ i++ ]     = 'm';
+				send_buf[ i++ ]     = 13;
+				send_buf[ i++ ]     = 10;
+				CDC_Transmit_FS( send_buf, i );
+			}
+		}
 	}
 
-	send_buf[ i++ ]     = 13;
-	send_buf[ i++ ]     = 10;
-	CDC_Transmit_FS( send_buf, 9 );
+//	send_buf[ i++ ]     = 13;
+//	send_buf[ i++ ]     = 10;
+//	CDC_Transmit_FS( send_buf, i );
 
   /* USER CODE END EXTI4_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
@@ -249,7 +268,7 @@ void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
 
-	HAL_GPIO_TogglePin( GPIOC, GPIO_PIN_13 );
+	//HAL_GPIO_TogglePin( GPIOC, GPIO_PIN_13 );
 
   /* USER CODE END TIM2_IRQn 0 */
   HAL_TIM_IRQHandler(&htim2);
