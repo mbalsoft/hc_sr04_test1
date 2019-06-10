@@ -220,8 +220,8 @@ void EXTI4_IRQHandler(void)
 //		send_buf[ i++ ] = 'L';
 		HAL_GPIO_WritePin( GPIOC, GPIO_PIN_13, GPIO_PIN_SET );
 		echo = tim2_cnt;
-		if( (ping > 2) && (ping < 126) && (echo > ping) ) {
-			uint32_t dist_mm = echo >= 62496 ? 9999 : (echo - ping) * 8 * 10 / 58;
+		if( (ping > TRIG_WIDTH) && (ping < MAX_V_PING) && (echo > ping) ) {
+			uint32_t dist_mm = echo >= RST_START ? 9999 : (echo - ping) * S_TCK_US * 10 / 58;
 			if( dist_mm < 2000 ) {
 				HAL_GPIO_WritePin( GPIOC, GPIO_PIN_13, GPIO_PIN_RESET );
 				sprintf( send_buf, "%u", dist_mm );

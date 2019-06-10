@@ -68,6 +68,20 @@
 
 /* USER CODE BEGIN Private defines */
 
+#define APB2_TFREQ 72000000
+#define S_MFREQ 18 // measure freq. Hz
+// us per timer clock
+#define S_TCK_US ((1000000 + 65536 * S_MFREQ - 1) / (65536 * S_MFREQ))
+#define S_PERIOD ((1000000 + S_TCK_US * S_MFREQ - 1) / (S_TCK_US * S_MFREQ))
+#define TRIG_WIDTH (10 / S_TCK_US + 1) //10 us
+#define RST_START (S_PERIOD - (30 / S_TCK_US + 1)) // 30 us
+#define MAX_V_PING (1000 / S_TCK_US + 1) // 1000 us
+
+#define TIM2_PSC   APB2_TFREQ / 1000000 * S_TCK_US - 1 // 10 us
+#define TIM2_ARR   S_PERIOD - 1 // 2 Hz
+#define TIM2_CCR3  TRIG_WIDTH // trigger pulse >= 10 us
+#define TIM2_CCR2  RST_START // reset pulse - 20 us
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
