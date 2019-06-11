@@ -8,5 +8,10 @@ This project was implemented using project from http://ep.com.pl
 - Ultradźwiękowy czujnik odległości HC-SR04
 - author: Grzegorz Mazur
 
+There is better schematic with level converter.
+HC-SR04 works better with 5V voltage.
+I cannot observ false detections like in case of using 3.3V only.
+<img src='STM32F103C8T6_HC-SR04 v2.png' />
+
 The pinout view from STM32CubeMX:
 <img src='STM32F103C8T6_pinout.png' />
