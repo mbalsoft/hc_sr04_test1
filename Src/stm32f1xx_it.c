@@ -45,7 +45,7 @@ uint16_t ping, echo;
 
 /* External variables --------------------------------------------------------*/
 extern PCD_HandleTypeDef hpcd_USB_FS;
-extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim3;
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */ 
@@ -198,21 +198,35 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-* @brief This function handles EXTI line4 interrupt.
+* @brief This function handles USB low priority or CAN RX0 interrupts.
 */
-void EXTI4_IRQHandler(void)
+void USB_LP_CAN1_RX0_IRQHandler(void)
 {
-  /* USER CODE BEGIN EXTI4_IRQn 0 */
+  /* USER CODE BEGIN USB_LP_CAN1_RX0_IRQn 0 */
+
+  /* USER CODE END USB_LP_CAN1_RX0_IRQn 0 */
+  HAL_PCD_IRQHandler(&hpcd_USB_FS);
+  /* USER CODE BEGIN USB_LP_CAN1_RX0_IRQn 1 */
+
+  /* USER CODE END USB_LP_CAN1_RX0_IRQn 1 */
+}
+
+/**
+* @brief This function handles EXTI line[9:5] interrupts.
+*/
+void EXTI9_5_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI9_5_IRQn 0 */
 
 	int8_t i;
 
-	uint32_t tim2_cnt = htim2.Instance->CNT; //__HAL_TIM_GetCounter( &htim2 );  stm32f4xx_hal_tim.h
+	uint32_t tim2_cnt = htim3.Instance->CNT; //__HAL_TIM_GetCounter( &htim2 );  stm32f4xx_hal_tim.h
 //	sprintf( send_buf, "%u", tim2_cnt );
 //	i = 1;
 //	while( (send_buf[ i ] != 0) && (i < 99) ) i++;
 //	send_buf[ i++ ] = ' ';
 
-	if( HAL_GPIO_ReadPin( GPIOA, GPIO_PIN_4 )) {
+	if( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_6 )) {
 //		send_buf[ i++ ] = 'H';
 		ping = tim2_cnt;
 	}
@@ -222,7 +236,7 @@ void EXTI4_IRQHandler(void)
 		echo = tim2_cnt;
 		if( (ping > TRIG_WIDTH) && (ping < MAX_V_PING) && (echo > ping) ) {
 			uint32_t dist_mm = echo >= RST_START ? 9999 : (echo - ping) * S_TCK_US * 10 / 58;
-			if( dist_mm < 2000 ) {
+			if( dist_mm < 1000 ) {
 				HAL_GPIO_WritePin( GPIOC, GPIO_PIN_13, GPIO_PIN_RESET );
 				sprintf( send_buf, "%u", dist_mm );
 				i = 1;
@@ -240,41 +254,27 @@ void EXTI4_IRQHandler(void)
 //	send_buf[ i++ ]     = 10;
 //	CDC_Transmit_FS( send_buf, i );
 
-  /* USER CODE END EXTI4_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
-  /* USER CODE BEGIN EXTI4_IRQn 1 */
+  /* USER CODE END EXTI9_5_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_6);
+  /* USER CODE BEGIN EXTI9_5_IRQn 1 */
 
-  /* USER CODE END EXTI4_IRQn 1 */
+  /* USER CODE END EXTI9_5_IRQn 1 */
 }
 
 /**
-* @brief This function handles USB low priority or CAN RX0 interrupts.
+* @brief This function handles TIM3 global interrupt.
 */
-void USB_LP_CAN1_RX0_IRQHandler(void)
+void TIM3_IRQHandler(void)
 {
-  /* USER CODE BEGIN USB_LP_CAN1_RX0_IRQn 0 */
-
-  /* USER CODE END USB_LP_CAN1_RX0_IRQn 0 */
-  HAL_PCD_IRQHandler(&hpcd_USB_FS);
-  /* USER CODE BEGIN USB_LP_CAN1_RX0_IRQn 1 */
-
-  /* USER CODE END USB_LP_CAN1_RX0_IRQn 1 */
-}
-
-/**
-* @brief This function handles TIM2 global interrupt.
-*/
-void TIM2_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM2_IRQn 0 */
+  /* USER CODE BEGIN TIM3_IRQn 0 */
 
 	//HAL_GPIO_TogglePin( GPIOC, GPIO_PIN_13 );
 
-  /* USER CODE END TIM2_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim2);
-  /* USER CODE BEGIN TIM2_IRQn 1 */
+  /* USER CODE END TIM3_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim3);
+  /* USER CODE BEGIN TIM3_IRQn 1 */
 
-  /* USER CODE END TIM2_IRQn 1 */
+  /* USER CODE END TIM3_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

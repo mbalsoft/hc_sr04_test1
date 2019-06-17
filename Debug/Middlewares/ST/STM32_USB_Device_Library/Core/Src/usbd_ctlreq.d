@@ -24,7 +24,6 @@ Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o: \
  C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
- C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h \
  C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h \
@@ -83,8 +82,6 @@ C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ha
 C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
 
 C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
-
-C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h:
 
 C:/src/STM32/HC-SR04/hc_sr04_test1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 
